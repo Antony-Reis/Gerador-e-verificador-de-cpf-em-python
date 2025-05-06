@@ -54,8 +54,35 @@ def validar_cpf(cpf, retorna_bool=False):
              return False
             else:
                 return f'CPF {cpf} inválido!'
+
+def gerar_cpf(qntd=1,formatado=False):
+    from random import randint
+    cpfs = []
+    for i in range(qntd):
+
+        cpf_valido = False
+
+        while not cpf_valido:
+            cpf_criado = "".join([str(randint(0, 9)) for i in range(11)])
+            cpf_valido = True if validar_cpf(cpf_criado, retorna_bool=True) else cpf_valido
+        cpfs.append(cpf_criado)
+        
+    cpfs_str = ""
+    
+    if formatado:
+        for c in cpfs:
+            cpfs_str += f'{c[:3]}.{c[3:6]}.{c[6:9]}-{c[9:]}' + "\n"
+    else:
+        for c in cpfs:
+            cpfs_str += c + "\n"
    
-from random import randint   
+    return cpfs_str
+                
+
+        
+
+
+  
 
 while True:
     control = input('1 para validar um cpf\n2 para gerar um cpf\n3 para sair\n').strip()
@@ -70,22 +97,9 @@ while True:
 
         
     elif control == '2':
-        try:
-            qntd_cpf = int(input('Insira quantos cpfs deseja gerar: \n'))
-            cpfs = []
-            for i in range(qntd_cpf):
-
-                cpf_valido = False
-
-                while not cpf_valido:
-                    cpf_criado = "".join([str(randint(0, 9)) for i in range(11)])
-                    cpf_valido = True if validar_cpf(cpf_criado, retorna_bool=True) else cpf_valido
-                cpfs.append(cpf_criado)
-
-            print(*cpfs, sep='\n')
-                
-        except ValueError:
-            print('ERRO, insira um valor inteiro!')
+        
+        quantidade = int(input("Insira a quantidade de cpfs que deseja gerar\n"))
+        print(gerar_cpf(quantidade, formatado=True))
 
     else:
         print('Comando inválido!')
