@@ -60,11 +60,12 @@ def gerar_cpf(qntd=1,formatado=False):
     cpfs = []
     for i in range(qntd):
 
-        cpf_valido = False
+        cpf_invalido = True
 
-        while not cpf_valido:
+        while cpf_invalido:
             cpf_criado = "".join([str(randint(0, 9)) for i in range(11)])
-            cpf_valido = True if validar_cpf(cpf_criado, retorna_bool=True) else cpf_valido
+            cpf_invalido = False if validar_cpf(cpf_criado, retorna_bool=True) else True
+            
         cpfs.append(cpf_criado)
         
     cpfs_str = ""
@@ -79,10 +80,6 @@ def gerar_cpf(qntd=1,formatado=False):
     return cpfs_str
                 
 
-        
-
-
-  
 
 while True:
     control = input('1 para validar um cpf\n2 para gerar um cpf\n3 para sair\n').strip()
